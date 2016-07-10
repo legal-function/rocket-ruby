@@ -5,17 +5,14 @@ require_relative 'property.rb'
 class Replay
   attr_reader :replay, :json_file, :header_data
 
-  def initialize(replay, json_file = nil, return_var = nil)
+  def initialize(replay, json_file = 'data.json', return_var = nil)
     @return_var = return_var
     @replay = replay
     @json_file = json_file
-    @header_data = nil
+    @header_data = {}
   end
 
   def parse_data
-    @header_data = {}
-    _meta_data = []
-
     File.open(@replay) do |file|
       # Size of the header section in bytes.
       header_size = DataNumber.new.read(file)
@@ -55,12 +52,6 @@ class Replay
 
       puts 'All data read successfully.'
     end
-
-    if @return_var == 'hash'
-      @header_data
-    else
-      @json_file.nil? ? make_json : write_to_json
-    end
   end
 
   def read_header(file)
@@ -94,10 +85,7 @@ class Replay
     puts "Data successfully written to #{File.basename(@json_file)}."
   end
 
-  def make_json
-    out_file = File.new("data.json", "w")
-    out_file.write(JSON.pretty_generate(@header_data))
-    out_file.close
-    puts 'A data.json file containing the header data has been generated.'
+  def get_hash
+    @header_data
   end
 end
