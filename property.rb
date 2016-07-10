@@ -13,11 +13,12 @@ class Property
 
   def initialize(file)
     @name = PropertyName.new.read(file).name.val[0...-1]
-    if @name != 'None'
-      @data = strip_data(PropertyData.new.read(file), file)
-    else
-      @data = 'None'
-    end
+
+    @data = if @name != 'None'
+              strip_data(PropertyData.new.read(file), file)
+            else
+              'None'
+            end
   end
 
   # Strips the data from a property record.

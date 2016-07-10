@@ -55,8 +55,9 @@ class Replay
 
       puts 'All data read successfully.'
     end
+
     if @return_var == 'hash'
-      return @header_data
+      @header_data
     else
       @json_file.nil? ? make_json : write_to_json
     end

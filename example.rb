@@ -1,11 +1,11 @@
 require_relative 'replay.rb'
 
 # Define a .replay file.
-file_path = '~/Desktop/rocket-ruby/sampleReplays/five.replay'
+file_path = '~/dev/rocket-ruby/sampleReplays/five.replay'
 replay_file = File.expand_path(file_path)
 
 # Optional, define a .json file.
-data_file = '~/Desktop/rocket-ruby/sample.json'
+data_file = '~/dev/rocket-ruby/sample_oops.json'
 json_file = File.expand_path(data_file)
 
 # Create a replay object.
