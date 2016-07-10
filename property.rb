@@ -24,10 +24,12 @@ class Property
   # Strips the data from a property record.
   def strip_data(property, file)
     property_type = property.type_var.val[0...-1]
-    return property.data if property_type == 'IntProperty' || property_type == 'FloatProperty' || property_type == 'QWordProperty'
-    return property.data.val[0...-1] if property_type == 'StrProperty' || property_type == 'NameProperty'
-    return property.data.byte_val.val[0...-1] if property_type == 'ByteProperty'
-    return property.data == 1 if property_type == 'BoolProperty'
+
+    return property.data if number_property(property_type)
+    return property.data.val[0...-1] if str_property(property_type)
+    return property.data.byte_val.val[0...-1] if byte_property(property_type)
+    return property.data == 1 if bool_property(property_type)
+
     # Must be an array at this point.
     data_list = {}
     loop_times = (@name == "Goals" ? GOALS_DATA_SIZE : STATS_DATA_SIZE)
@@ -42,5 +44,23 @@ class Property
       data_list[prop_number.to_s] = sub_data
     }
     data_list
+  end
+
+  private
+
+  def number_property(property_type)
+    %w(IntProperty FloatProperty QWordProperty).include?(property_type)
+  end
+
+  def str_property(property_type)
+    %w(StrProperty NameProperty).include?(property_type)
+  end
+
+  def byte_property(property_type)
+    property_type == 'ByteProperty'
+  end
+
+  def bool_property(property_type)
+    property_type == 'BoolProperty'
   end
 end

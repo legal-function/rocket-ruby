@@ -15,18 +15,18 @@ class PropertyData < BinData::Record
 
   int64 :data_len
   choice :data, selection: lambda{type_var.val} do
-    int32 'IntProperty\x00'
-    float 'FloatProperty\x00'
-    string_data 'StrProperty\x00'
-    string_data 'NameProperty\x00'
+    int32 "IntProperty\x00"
+    float "FloatProperty\x00"
+    string_data "StrProperty\x00"
+    string_data "NameProperty\x00"
     # Stores the array's length, data is sorted outsite the Record.
-    int32 'ArrayProperty\x00'
-    struct 'ByteProperty\x00' do
+    int32 "ArrayProperty\x00"
+    struct "ByteProperty\x00" do
       string_data :key_val
       string_data :byte_val
     end
-    int64 'QWordProperty\x00'
-    uint8 'BoolProperty\x00'
+    int64 "QWordProperty\x00"
+    uint8 "BoolProperty\x00"
   end
 end
 
