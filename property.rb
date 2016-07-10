@@ -32,14 +32,13 @@ class Property
 
     # Must be an array at this point.
     data_list = {}
-    loop_times = (@name == "Goals" ? GOALS_DATA_SIZE : STATS_DATA_SIZE)
+    loop_times = (@name == 'Goals' ? GOALS_DATA_SIZE : STATS_DATA_SIZE)
     property.data.times{|prop_number|
       sub_data = {}
       loop_times.times do
         arr_property = Property.new(file)
-        if arr_property.name != "None"
-          sub_data[arr_property.name] = arr_property.data
-        end
+        next if arr_property.name == 'None'
+        sub_data[arr_property.name] = arr_property.data
       end
       data_list[prop_number.to_s] = sub_data
     }
